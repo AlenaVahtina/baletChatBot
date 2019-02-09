@@ -1,0 +1,37 @@
+{
+    "one_time": false, 
+    "buttons": [ 
+      [{ 
+        "action": { 
+          "type": "text", 
+          "payload": "{\"button\": \"1\"}", 
+          "label": "Расписание"
+        }, 
+        "color": "default"
+      }, 
+     { 
+        "action": { 
+          "type": "text", 
+          "payload": "{\"button\": \"2\"}", 
+          "label": "Адрес проведения занятий"
+        }, 
+        "color": "default"
+      }], 
+      [{ 
+        "action": { 
+          "type": "text", 
+          "payload": "{\"button\": \"3\"}", 
+          "label": "Стоимость занятий"
+        }, 
+        "color": "default" 
+      }, 
+     { 
+        "action": { 
+          "type": "text", 
+          "payload": "{\"button\": \"4\"}", 
+          "label": "Контакты"
+        }, 
+        "color": "default"
+      }] 
+    ] 
+  } 
