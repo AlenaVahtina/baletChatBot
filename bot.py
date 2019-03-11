@@ -33,7 +33,9 @@ for event in longpoll.listen():
                 vk.messages.send(  # Отправляем сообщение
                     user_id=event.user_id,
                     random_id=event.random_id,
-                    message= place)
+                    lat=55.653663,
+                    long=37.620861,
+                    message=place)
         if event.text == u'Стоимость занятий':
             if event.from_user:
                 vk.messages.send(  # Отправляем сообщение
