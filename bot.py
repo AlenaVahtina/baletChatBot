@@ -6,6 +6,8 @@ token = "test"
 vk_session = vk_api.VkApi(token=token)
 plan = 'Занимаемся Вт, Чт и Пт с 19:30. Занятия идут 1.5 часа'
 place = 'Адрес бла-бла'
+lat=55.653663
+long=37.620861
 price = 'Еще не решено'
 contacts = 'Вот прямо так и сказала'
 
@@ -27,14 +29,15 @@ for event in longpoll.listen():
                 vk.messages.send(  # Отправляем сообщение
                     user_id=event.user_id,
                     random_id=event.random_id,
-                    message= plan)
+                    attachment="photo-178073199_456239018",
+                    message=plan)
         if event.text == u'Адрес проведения занятий':
             if event.from_user:
                 vk.messages.send(  # Отправляем сообщение
                     user_id=event.user_id,
                     random_id=event.random_id,
-                    lat=55.653663,
-                    long=37.620861,
+                    lat=lat,
+                    long=long,
                     message=place)
         if event.text == u'Стоимость занятий':
             if event.from_user:
@@ -66,29 +69,36 @@ for event in longpoll.listen():
                     random_id=event.random_id,
                     message='Будет исполнено',
                     ts=admin_ts)
-                print (plan)
-                if event.text.split(':')[0] == u'Поменять адрес':
-                    if event.from_user:
-                        place = event.text.split(':')[1]
-                        vk.messages.send(  # Отправляем сообщение
-                            user_id=test,
-                            random_id=event.random_id,
-                            message='Будет исполнено',
-                            ts=admin_ts)
-                if event.text.split(':')[0] == u'Поменять стоимость':
-                    if event.from_user:
-                        price = event.text.split(':')[1]
-                        vk.messages.send(  # Отправляем сообщение
-                            user_id=test,
-                            random_id=event.random_id,
-                            message='Будет исполнено',
-                            ts=admin_ts)
-                if event.text.split(':')[0] == u'Поменять контакты':
-                    if event.from_user:
-                        contacts = event.text.split(':')[1]
-                        vk.messages.send(  # Отправляем сообщение
-                            user_id=test,
-                            random_id=event.random_id,
-                            message='Будет исполнено',
-                            ts=admin_ts)
+        if event.text.split(':')[0] == u'Поменять адрес':
+            if not admin_ts or event.user_id != test:
+                continue
+            if event.from_user:
+                place = event.text.split(':')[1]
+                lat = None
+                long = None
+                vk.messages.send(  # Отправляем сообщение
+                    user_id=test,
+                    random_id=event.random_id,
+                    message='Будет исполнено',
+                    ts=admin_ts)
+        if event.text.split(':')[0] == u'Поменять стоимость':
+            if not admin_ts or event.user_id != test:
+                continue
+            if event.from_user:
+                price = event.text.split(':')[1]
+                vk.messages.send(  # Отправляем сообщение
+                    user_id=test,
+                    random_id=event.random_id,
+                    message='Будет исполнено',
+                    ts=admin_ts)
+        if event.text.split(':')[0] == u'Поменять контакты':
+            if not admin_ts or event.user_id != test:
+                continue
+            if event.from_user:
+                contacts = event.text.split(':')[1]
+                vk.messages.send(  # Отправляем сообщение
+                    user_id=test,
+                    random_id=event.random_id,
+                    message='Будет исполнено',
+                    ts=admin_ts)
 
