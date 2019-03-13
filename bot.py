@@ -10,6 +10,7 @@ lat=55.653663
 long=37.620861
 price = 'Еще не решено'
 contacts = 'Вот прямо так и сказала'
+greeting = [u'Привет', u'Добрый день', u'Здравствуйте', u'Добрый вечер', u'Hi']
 
 
 
@@ -24,6 +25,14 @@ admin_ts=0
 vk = vk_session.get_api()
 for event in longpoll.listen():
     if event.type == VkEventType.MESSAGE_NEW and event.to_me and event.text:
+        if event.text in greeting:
+            if event.from_user:
+                vk.messages.send(  # Отправляем сообщение
+                    user_id=event.user_id,
+                    random_id=event.random_id,
+                    message="Еще раз привет. Я бот. С помощью кнопок внизу ты можешь узнать рассписание, стоимость,"
+                            " адрес или время проведения занятий. Если у тебя есть другие вопросы, можешь написать,"
+                            "и в скором времеи кто-нибудь и администараторов тебе обязательно ответит!")
         if event.text == u'Расписание':
             if event.from_user:
                 vk.messages.send(  # Отправляем сообщение
