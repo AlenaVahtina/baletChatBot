@@ -1,27 +1,8 @@
 # coding=utf-8
 import vk_api
+import re
+from connect import *
 
-# сообщество
-token = "test"
-vk_session = vk_api.VkApi(token=token)
-plan = 'Занимаемся Вт, Чт и Пт с 19:30. Занятия идут 1.5 часа'
-place = 'Адрес бла-бла'
-lat=55.653663
-long=37.620861
-price = 'Еще не решено'
-contacts = 'Вот прямо так и сказала'
-greeting = [u'Привет', u'Добрый день', u'Здравствуйте', u'Добрый вечер', u'Hi']
-
-
-
-try:
-    vk_session.auth(token_only=True)
-except vk_api.AuthError as error_msg:
-    print(error_msg)
-from vk_api.longpoll import VkLongPoll, VkEventType
-
-longpoll = VkLongPoll(vk_session)
-admin_ts=0
 vk = vk_session.get_api()
 for event in longpoll.listen():
     if event.type == VkEventType.MESSAGE_NEW and event.to_me and event.text:
@@ -33,7 +14,7 @@ for event in longpoll.listen():
                     message="Еще раз привет. Я бот. С помощью кнопок внизу ты можешь узнать рассписание, стоимость,"
                             " адрес или время проведения занятий. Если у тебя есть другие вопросы, можешь написать,"
                             "и в скором времеи кто-нибудь и администараторов тебе обязательно ответит!")
-        if event.text == u'Расписание':
+        if re.match(u'.*(Расписание|Когда|сколько).*', event.text, flags=re.IGNORECASE):
             if event.from_user:
                 vk.messages.send(  # Отправляем сообщение
                     user_id=event.user_id,
@@ -69,7 +50,7 @@ for event in longpoll.listen():
                 print (longpoll.ts)
                 admin_ts = longpoll.ts
         if event.text.split(':')[0] == u'Поменять расписание':
-            if not admin_ts or event.user_id != test:
+            if not admin_ts or event.user_id != admin_user_id:
                 continue
             if event.from_user:
                 plan = event.text.split(':')[1]
@@ -79,34 +60,34 @@ for event in longpoll.listen():
                     message='Будет исполнено',
                     ts=admin_ts)
         if event.text.split(':')[0] == u'Поменять адрес':
-            if not admin_ts or event.user_id != test:
+            if not admin_ts or event.user_id != admin_user_id:
                 continue
             if event.from_user:
                 place = event.text.split(':')[1]
                 lat = None
                 long = None
                 vk.messages.send(  # Отправляем сообщение
-                    user_id=test,
+                    user_id=admin_user_id,
                     random_id=event.random_id,
                     message='Будет исполнено',
                     ts=admin_ts)
         if event.text.split(':')[0] == u'Поменять стоимость':
-            if not admin_ts or event.user_id != test:
+            if not admin_ts or event.user_id != admin_user_id:
                 continue
             if event.from_user:
                 price = event.text.split(':')[1]
                 vk.messages.send(  # Отправляем сообщение
-                    user_id=test,
+                    user_id=admin_user_id,
                     random_id=event.random_id,
                     message='Будет исполнено',
                     ts=admin_ts)
         if event.text.split(':')[0] == u'Поменять контакты':
-            if not admin_ts or event.user_id != test:
+            if not admin_ts or event.user_id !=admin_user_id:
                 continue
             if event.from_user:
                 contacts = event.text.split(':')[1]
                 vk.messages.send(  # Отправляем сообщение
-                    user_id=test,
+                    user_id=admin_user_id,
                     random_id=event.random_id,
                     message='Будет исполнено',
                     ts=admin_ts)
