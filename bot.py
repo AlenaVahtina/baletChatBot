@@ -6,22 +6,30 @@ from connect import *
 vk = vk_session.get_api()
 for event in longpoll.listen():
     if event.type == VkEventType.MESSAGE_NEW and event.to_me and event.text:
-        if event.text in greeting:
+        if re.match(u'.*(Привет|Добрый день|Здравствуйте|Добрый вечер|Hi).*', event.text, flags=re.IGNORECASE):
             if event.from_user:
-                vk.messages.send(  # Отправляем сообщение
+                vk.messages.send(
                     user_id=event.user_id,
                     random_id=event.random_id,
                     message="Еще раз привет. Я бот. С помощью кнопок внизу ты можешь узнать рассписание, стоимость,"
                             " адрес или время проведения занятий. Если у тебя есть другие вопросы, можешь написать,"
                             "и в скором времеи кто-нибудь и администараторов тебе обязательно ответит!")
-        if re.match(u'.*(Расписание|Когда|сколько).*', event.text, flags=re.IGNORECASE):
-            if event.from_user:
-                vk.messages.send(  # Отправляем сообщение
+                vk.messages.send(
                     user_id=event.user_id,
                     random_id=event.random_id,
-                    attachment="photo-178073199_456239018",
+                    message="Если снизу нет кнопок навигации, то чтобы узнать информайию вы пожете отправить сообщение "
+                            "\n 1-Адрес проведения занятий"
+                            "\n 2-Стоимость занятий"
+                            "\n 3-Контакты"
+                            "\n 4-Расписание")
+        if re.match(u'.*(Расписание|Когда|сколько|4).*', event.text, flags=re.IGNORECASE):
+            if event.from_user:
+                vk.messages.send(
+                    user_id=event.user_id,
+                    random_id=event.random_id,
+                    attachment="photo-178073199_456239019",
                     message=plan)
-        if event.text == u'Адрес проведения занятий':
+        if re.match(u'.*(Адрес|Где|Место|1).*', event.text, flags=re.IGNORECASE):
             if event.from_user:
                 vk.messages.send(  # Отправляем сообщение
                     user_id=event.user_id,
@@ -29,21 +37,27 @@ for event in longpoll.listen():
                     lat=lat,
                     long=long,
                     message=place)
-        if event.text == u'Стоимость занятий':
+        if re.match(u'.*(Стоимость занятий|Цена|Сколько|2|Стоимость|Оплата|Запатить).*', event.text, flags=re.IGNORECASE):
             if event.from_user:
-                vk.messages.send(  # Отправляем сообщение
+                vk.messages.send(
                     user_id=event.user_id,
                     random_id=event.random_id,
                     message=price)
-        if event.text == u'Контакты':
+        if re.match(u'.*(Контакты|3|Кто).*', event.text, flags=re.IGNORECASE):
             if event.from_user:
-                vk.messages.send(  # Отправляем сообщение
+                vk.messages.send(
                     user_id=event.user_id,
                     random_id=event.random_id,
                     message=contacts)
+        if re.match(u'.*(Спасибо|пока).*', event.text, flags=re.IGNORECASE):
+            if event.from_user:
+                vk.messages.send(
+                    user_id=event.user_id,
+                    random_id=event.random_id,
+                    message="Надеюсь смог помочь. Обращайся еще!")
         if event.text == u'admin/admin':
             if event.from_user:
-                vk.messages.send(  # Отправляем сообщение
+                vk.messages.send(
                     user_id=event.user_id,
                     random_id=event.random_id,
                     message='Привет,Настя! Что желаешь поменять?')

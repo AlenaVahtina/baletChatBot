@@ -3,15 +3,13 @@ from vk_api.upload import VkUpload
 from connect import *
 
 upload_url = None
+# try:
+#     vk_session.authorization()
+# except vk_api.AuthorizationError as error_msg:
+#     print(error_msg)
 
-try:
-    vk_session.auth(token_only=True)
-except vk_api.AuthError as error_msg:
-    print(error_msg)
-
-stories = VkUpload.story(vk_session)
-
-upload_url = stories.getPhotoUploadServer(add_to_news=1)
-
-
-
+upload = vk_api.VkUpload(vk_session)
+upload.story(
+    'balteR3.png',
+    'photo',
+    group_id='178073199')

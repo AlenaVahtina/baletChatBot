@@ -9,13 +9,17 @@ lat=55.653663
 long=37.620861
 price = 'Еще не решено'
 contacts = 'Вот прямо так и сказала'
-greeting = [u'Привет', u'Добрый день', u'Здравствуйте', u'Добрый вечер', u'Hi']
-admin_ts=0
+greeting = [u'Привет', u'Добрый день', u'Здравствуйте', u'Добрый вечер', u'Hi', u'привет']
+admin_ts = 0
 
 try:
-    vk_session.auth(token_only=True)
+    vk_session.auth(reauth=True,token_only=True)
 except vk_api.AuthError as error_msg:
     print(error_msg)
+
+
+
+
 from vk_api.longpoll import VkLongPoll, VkEventType
 
 longpoll = VkLongPoll(vk_session)
