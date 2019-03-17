@@ -6,22 +6,24 @@ from connect import *
 vk = vk_session.get_api()
 for event in longpoll.listen():
     if event.type == VkEventType.MESSAGE_NEW and event.to_me and event.text:
-        if re.match(u'.*(Привет|Добрый день|Здравствуйте|Добрый вечер|Hi).*', event.text, flags=re.IGNORECASE):
+        if re.match(u'.*(Привет|Добрый день|Здравствуйте|Добрый вечер|Hi|Хай|Дратути).*', event.text, flags=re.IGNORECASE):
             if event.from_user:
                 vk.messages.send(
                     user_id=event.user_id,
                     random_id=event.random_id,
-                    message="Еще раз привет. Я бот. С помощью кнопок внизу ты можешь узнать рассписание, стоимость,"
-                            " адрес или время проведения занятий. Если у тебя есть другие вопросы, можешь написать,"
-                            "и в скором времеи кто-нибудь и администараторов тебе обязательно ответит!")
+                    message="Еще раз привет. Я бот. С помощью кнопок внизу ты можешь узнать расписание, стоимость,"
+                            " адрес или время проведения занятий. Если у тебя есть другие вопросы,"
+                            " можешь написать и в скором времени кто-нибудь и администраторов тебе обязательно ответит!")
                 vk.messages.send(
                     user_id=event.user_id,
                     random_id=event.random_id,
-                    message="Если снизу нет кнопок навигации, то чтобы узнать информайию вы пожете отправить сообщение "
+                    message="Если снизу нет кнопок навигации, то, чтобы узнать информацию вы можете отправить сообщение"
                             "\n 1-Адрес проведения занятий"
                             "\n 2-Стоимость занятий"
                             "\n 3-Контакты"
-                            "\n 4-Расписание")
+                            "\n 4-Расписание"
+                            "\n 5-Возраст занимающихся"
+                            "\n 6-Индивидуальные занятия")
         if re.match(u'.*(Расписание|Когда|сколько|4).*', event.text, flags=re.IGNORECASE):
             if event.from_user:
                 vk.messages.send(
@@ -49,6 +51,18 @@ for event in longpoll.listen():
                     user_id=event.user_id,
                     random_id=event.random_id,
                     message=contacts)
+        if re.match(u'.*(Возраст|5|Дети|Возрастные категории).*', event.text, flags=re.IGNORECASE):
+            if event.from_user:
+                vk.messages.send(
+                    user_id=event.user_id,
+                    random_id=event.random_id,
+                    message="Для детских групп проходят отдельные занятия. Возраст начала занятий от 11 лет.")
+        if re.match(u'.*(Индивидуальные|6|Частные|индивидуально).*', event.text, flags=re.IGNORECASE):
+            if event.from_user:
+                vk.messages.send(
+                    user_id=event.user_id,
+                    random_id=event.random_id,
+                    message="Про частные занятия можно узнать по тел.:")
         if re.match(u'.*(Спасибо|пока).*', event.text, flags=re.IGNORECASE):
             if event.from_user:
                 vk.messages.send(
@@ -85,7 +99,7 @@ for event in longpoll.listen():
                     random_id=event.random_id,
                     message='Будет исполнено',
                     ts=admin_ts)
-        if event.text.split(':')[0] == u'Поменять стоимость':
+        if event.text.split(':')[0] == u'Поменять ст    оимость':
             if not admin_ts or event.user_id != admin_user_id:
                 continue
             if event.from_user:

@@ -1,7 +1,7 @@
 {
     "one_time": false, 
     "buttons": [ 
-      [{ 
+      {
         "action": { 
           "type": "text", 
           "payload": "{\"button\": \"1\"}", 
@@ -16,8 +16,8 @@
           "label": "Адрес проведения занятий"
         }, 
         "color": "default"
-      }], 
-      [{ 
+      },
+      {
         "action": { 
           "type": "text", 
           "payload": "{\"button\": \"3\"}", 
@@ -32,6 +32,22 @@
           "label": "Контакты"
         }, 
         "color": "default"
-      }] 
+      },
+//      {
+//        "action": {
+//          "type": "text",
+//          "payload": "{\"button\": \"5\"}",
+//          "label": "Возрастные категории"
+//        },
+//        "color": "default"
+//      },
+//     {
+//        "action": {
+//          "type": "text",
+//          "payload": "{\"button\": \"6\"}",
+//          "label": "Индивидуальные занятия"
+//        },
+//        "color": "default"
+//      }
     ] 
   } 
