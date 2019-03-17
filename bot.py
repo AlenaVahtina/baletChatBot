@@ -29,7 +29,7 @@ for event in longpoll.listen():
                 vk.messages.send(
                     user_id=event.user_id,
                     random_id=event.random_id,
-                    attachment="photo-178073199_456239019",
+                    attachment=plan_picture,
                     message=plan)
         if re.match(u'.*(Адрес|Где|Место|1).*', event.text, flags=re.IGNORECASE):
             if event.from_user:
@@ -82,6 +82,7 @@ for event in longpoll.listen():
                 continue
             if event.from_user:
                 plan = event.text.split(':')[1]
+                plan_picture = None
                 vk.messages.send(  # Отправляем сообщение
                     user_id=event.user_id,
                     random_id=event.random_id,
@@ -99,7 +100,7 @@ for event in longpoll.listen():
                     random_id=event.random_id,
                     message='Будет исполнено',
                     ts=admin_ts)
-        if event.text.split(':')[0] == u'Поменять ст    оимость':
+        if event.text.split(':')[0] == u'Поменять стоимость':
             if not admin_ts or event.user_id != admin_user_id:
                 continue
             if event.from_user:
