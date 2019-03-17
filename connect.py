@@ -1,7 +1,7 @@
 import vk_api
 # сообщество
-token = "c92688cab7bb7e6c3840dd82483adc3b19698f0d2ccd6433b61832136b48cd6328eae24f6662320f9fce9"
-admin_user_id=39002348
+token = "test"
+admin_user_id=test
 vk_session = vk_api.VkApi(token=token)
 plan = 'Занимаемся Вт, Чт и Пт с 19:30. Занятия идут 1.5 часа'
 place = 'Адрес бла-бла'
